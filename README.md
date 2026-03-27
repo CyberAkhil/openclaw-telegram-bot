@@ -1,21 +1,20 @@
 # OpenClaw Telegram Bot 🤖
 
-A powerful integration of OpenClaw AI with Telegram, deployed on Microsoft Azure for scalable AI-powered conversations.
+A production-ready Telegram bot powered by OpenClaw AI, deployed on Microsoft Azure with support for multiple AI models and real-world conversation handling.
 
 ## Overview
 
-This project bridges OpenClaw (an advanced AI agent framework) with Telegram Bot API, creating an accessible AI assistant that works seamlessly through Telegram. Users can leverage multiple AI models (Gemini, OpenRouter, HuggingFace) with intelligent routing and web search capabilities.
+This project demonstrates a **practical AI integration** combining OpenClaw (an advanced AI agent framework) with Telegram Bot API. It's deployed on Microsoft Azure VM with SSH tunneling for secure communication, showcasing real-world AI deployment patterns.
 
-## Features ✨
+## Key Features
 
-- **OpenClaw AI Integration** - Advanced AI agent capabilities
-- **Multi-Model Support** - Gemini 2.0 Flash, OpenRouter, HuggingFace models
-- **Telegram Bot Interface** - Easy-to-use bot commands
-- **Azure Cloud Deployment** - Scalable cloud infrastructure on Microsoft Azure
-- **Web Search** - Real-time information retrieval with DuckDuckGo
-- **Stateful Conversations** - Context-aware responses with conversation history
-- **SSH Tunneling** - Secure remote access to your OpenClaw instance
-- **Environment-Based Configuration** - Flexible setup with environment variables
+- **🧠 OpenClaw AI Integration** - Advanced conversational AI agent capabilities
+- **🔄 Multi-Model Support** - Seamless switching between Gemini 2.0 Flash, OpenRouter, and HuggingFace models
+- **💬 Telegram Bot Interface** - User-friendly bot commands and conversation handling
+- **☁️ Azure Cloud Deployment** - Scalable cloud infrastructure with SSH tunneling
+- **🔍 Web Search** - Real-time information retrieval via DuckDuckGo integration
+- **📝 Conversation History** - Context-aware responses with stateful conversation management
+- **🔐 Environment-Based Config** - Secure credential management with .env configuration
 
 ## Architecture
 
@@ -30,147 +29,137 @@ Microsoft Azure VM
     ↓
 OpenClaw Agent Framework
     ↓
-AI Models (Gemini/OpenRouter/HF)
+AI Models (Gemini/OpenRouter/HuggingFace)
     ↓
 Response to User
 ```
 
 ## Technology Stack
 
-- **Language**: Python 3.9+
-- **Bot Framework**: python-telegram-bot
-- **Cloud Platform**: Microsoft Azure (VM)
-- **AI Engine**: OpenClaw 2026.3.23+
-- **Models**: Google Gemini, OpenRouter, HuggingFace
-- **Deployment**: Docker (optional), Direct Python
+| Component | Technology |
+|-----------|------------|
+| **Language** | Python 3.9+ |
+| **Bot Framework** | python-telegram-bot |
+| **Cloud Platform** | Microsoft Azure (Ubuntu VM) |
+| **AI Engine** | OpenClaw 2026.3.23+ |
+| **Models** | Google Gemini, OpenRouter, HuggingFace |
+| **Networking** | SSH Tunneling |
+| **Configuration** | Environment Variables |
 
-## Quick Start
+## Installation & Setup
 
 ### Prerequisites
 
 - Python 3.9+
-- Telegram Bot Token (from @BotFather)
-- Azure VM with OpenClaw setup
-- API Keys: OpenRouter, Gemini (optional)
+- Telegram Bot Token (from BotFather)
+- Azure VM or local machine
+- OpenClaw API credentials
+- At least one AI model API key (Gemini, OpenRouter, or HuggingFace)
 
-### Installation
+### Quick Start
 
-```bash
-# Clone the repository
-git clone https://github.com/CyberAkhil/openclaw-telegram-bot.git
-cd openclaw-telegram-bot
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/CyberAkhil/openclaw-telegram-bot.git
+   cd openclaw-telegram-bot
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# Create .env file
-cp .env.example .env
+3. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your credentials
+   ```
 
-# Configure your keys in .env
-nano .env
-```
+4. **Start the bot**
+   ```bash
+   python main.py
+   ```
 
-### Configuration
+## Configuration
 
-**Required in .env:**
+Edit `.env` file with the following variables:
+
 ```env
-TELEGRAM_BOT_TOKEN=your_bot_token_here
-OPENCLAW_VM_IP=your_azure_vm_ip
-OPENCLAW_VM_USER=your_vm_username
-OPENCLAW_VM_SSH_KEY=/path/to/your/ssh/key.pem
-```
+# Telegram Configuration
+TELEGRAM_BOT_TOKEN=your_token_here
 
-**Optional:**
-```env
+# OpenClaw Configuration
+OPENCLAW_API_KEY=your_api_key
+OPENCLAW_INSTANCE_URL=your_instance_url
+
+# Azure SSH Configuration
+AZURE_VM_HOST=your_azure_vm_ip
+AZURE_VM_USER=your_username
+AZURE_VM_KEY_PATH=/path/to/ssh/key
+AZURE_VM_PORT=22
+
+# AI Model Selection
+DEFAULT_MODEL=gemini  # gemini, openrouter, or huggingface
 GEMINI_API_KEY=your_gemini_key
 OPENROUTER_API_KEY=your_openrouter_key
-DEBUG=true
+HUGGINGFACE_API_KEY=your_hf_key
 ```
 
-### Running the Bot
+See `.env.example` for detailed configuration options.
 
-```bash
-# Start the bot
-python src/main.py
+## Project Structure
 
-# With SSH tunnel (recommended for remote VM)
-ssh -i your-key.pem -L 18789:127.0.0.1:18789 user@your-vm-ip
-python src/main.py
+```
+.
+├── src/
+│   ├── bot.py                    # Main bot logic
+│   ├── openclaw_integration.py   # OpenClaw API wrapper
+│   ├── azure_integration.py      # Azure VM SSH handling
+│   └── __init__.py
+├── main.py                       # Entry point
+├── requirements.txt              # Python dependencies
+├── .env.example                  # Configuration template
+├── .gitignore                    # Git ignore rules
+├── README.md                     # This file
+├── DEPLOYMENT.md                 # Production deployment guide
+├── ROADMAP.md                    # Future features & improvements
+├── CONTRIBUTING.md               # Contribution guidelines
+├── ACTION_ITEMS.md               # Tracked improvements
+└── LICENSE                       # MIT License
 ```
 
 ## Usage
 
 ### Bot Commands
 
-```
-/start - Initialize the bot and show welcome message
-/help - Display all available commands
-/ask <query> - Ask OpenClaw AI any question
-/search <term> - Search the web using DuckDuckGo
-/status - Check bot and OpenClaw status
-/model <name> - Switch to different AI model
-/config - Show current configuration
-/clear - Clear conversation history
-```
+- `/start` - Initialize bot and show welcome message
+- `/help` - Display available commands
+- `/ask <query>` - Send query to OpenClaw AI
+- `/search <query>` - Search the web and get AI summary
+- `/model <name>` - Switch between AI models
+- `/history` - Show conversation history
+- `/clear` - Clear conversation history
 
-### Example Interactions
-
-**Basic AI Query:**
-```
-/ask what is machine learning?
-```
-
-**Web Search:**
-```
-/search latest AI news 2026
-```
-
-**Model Switching:**
-```
-/model gemini-2.0-flash
-```
-
-## Supported Models
-
-| Model | Provider | Speed | Cost | Best For |
-|-------|----------|-------|------|----------|
-| gemini-2.0-flash | Google | ⚡⚡⚡ | Free/API | General queries, fast responses |
-| trinity-large:free | OpenRouter | ⚡⚡ | Free | Balanced performance |
-| tiny-aya | HuggingFace | ⚡ | Free | Low-resource scenarios |
-
-## Project Structure
+### Example Conversation
 
 ```
-openclaw-telegram-bot/
-├── src/
-│   ├── __init__.py
-│   ├── main.py              # Entry point
-│   ├── bot.py               # Telegram bot handler
-│   ├── openclaw_client.py   # OpenClaw integration
-│   ├── config.py            # Configuration management
-│   └── utils.py             # Utility functions
-├── config/
-│   ├── azure_config.json
-│   └── telegram_handlers.py
-├── docs/
-│   ├── SETUP_GUIDE.md
-│   ├── DEPLOYMENT.md
-│   └── TROUBLESHOOTING.md
-├── .env.example
-├── requirements.txt
-├── LICENSE (MIT)
-└── README.md
+User: /ask What is machine learning?
+
+Bot: Machine learning is a subset of artificial intelligence that enables 
+systems to learn and improve from experience without explicit programming...
 ```
 
 ## Deployment
 
-### Azure VM Setup
+### Azure Deployment
 
-1. Create Azure VM with Ubuntu 22.04
-2. Install OpenClaw on the VM
-3. Configure OpenClaw with your API keys
-4. Set up SSH key-based authentication
-5. Create SSH tunnel from your machine
+For detailed Azure deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+### Local Development
+
+```bash
+python main.py
+```
 
 ### Docker Deployment (Optional)
 
@@ -179,86 +168,31 @@ docker build -t openclaw-bot .
 docker run --env-file .env openclaw-bot
 ```
 
-## Performance
+## Future Improvements
 
-- **Average Response Time**: <2 seconds
-- **Concurrent Users Supported**: 100+
-- **API Error Rate**: <0.1%
-- **Uptime (SLA)**: 99.5%
-
-## Security
-
-- SSH key-based authentication for VM access
-- Environment variables for sensitive data
-- API key encryption in transit
-- Rate limiting on bot commands
-- Input validation and sanitization
+See [ROADMAP.md](ROADMAP.md) for planned features including:
+- Unit and integration tests
+- CI/CD pipeline with GitHub Actions
+- Advanced logging system
+- Rate limiting and abuse protection
+- Structured configuration management for production
+- Enhanced error handling and monitoring
 
 ## Contributing
 
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## Troubleshooting
-
-### Common Issues
-
-**Bot not responding:**
-- Check SSH tunnel is active
-- Verify OpenClaw is running on VM
-- Check Telegram token in .env
-
-**API Key errors:**
-- Verify keys in .env
-- Check API quotas
-- Ensure correct key format
-
-**Connection refused:**
-- Check VM IP address
-- Verify SSH key permissions (chmod 600)
-- Ensure OpenClaw port 18789 is accessible
-
-See [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for more details.
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) for details
-
-## Author
-
-**Nikhil Gumasta**
-- GitHub: [@CyberAkhil](https://github.com/CyberAkhil)
-- Email: nikhilgumasta1@gmail.com
-- LinkedIn: [in/nikhil-gumasta](https://linkedin.com/in/nikhil-gumasta)
+This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- OpenClaw Team for the amazing AI framework
-- Telegram Bot API for simplifying bot development
-- Microsoft Azure for reliable cloud infrastructure
-- Open Source Community
-
-## Support
-
-- 🐛 **Issues**: [GitHub Issues](https://github.com/CyberAkhil/openclaw-telegram-bot/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/CyberAkhil/openclaw-telegram-bot/discussions)
-- 📧 **Email**: nikhilgumasta1@gmail.com
-
-## Status Badges
-
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Python](https://img.shields.io/badge/python-3.9+-blue)
-![Azure](https://img.shields.io/badge/Azure-Cloud-blue)
-![OpenClaw](https://img.shields.io/badge/OpenClaw-2026.3+-red)
+- OpenClaw team for the advanced AI framework
+- Telegram Bot API documentation
+- Python-telegram-bot community
+- Azure documentation and tutorials
 
 ---
 
-**Made with ❤️ by Nikhil Gumasta**
-
-⭐ If you find this project helpful, please give it a star!
+**Status**: Active Development | **Python**: 3.9+ | **License**: MIT
